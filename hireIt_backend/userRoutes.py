@@ -5,25 +5,12 @@ from flask_bcrypt import Bcrypt
 import jwt
 from datetime import datetime, timedelta
 from localvars import SECRET_KEY
+from dbModels import User, Job
 # from jwt.exceptions import DecodeError
-
- 
-
-
 
 
 UserRouter = Blueprint('user', __name__)
 bcrypt = Bcrypt()
-
-class User(db.Model):
-    id = db.Column( db.Integer, primary_key = True)
-    username = db.Column(db.String(100),nullable= False)
-    email = db.Column(db.String(50))  
-    password = db.Column(db.String(50))
-
-    def __repr__(self) -> str:
-        return f"{self.id}-{self.username}-{self.email }"
-
 
 @UserRouter.route('/login', methods=['POST'])
 def user_signup():
@@ -49,10 +36,6 @@ def user_signup():
         return jsonify({'message':"Internal Server Error"}),500
 
 
-   
-
-
-
 @UserRouter.route('/getid', methods=['POST'])
 def getId():
     try:
@@ -67,9 +50,31 @@ def getId():
         return  jsonify({'message':'Please authenticate using a valid token'})
 
 
+@UserRouter.route('/addJob',methods=['GET','POST'])
+def AddJob():
+    try:
+        jobJSON=request.json
+        jobTitle=jobJSON['jobTitle']
+        jobDescription=jobJSON['jobDescription']
+        jobLevel=jobJSON['jobLevel']
+        jobType=jobJSON['jobType']
+        jobDeadline=jobJSON['jobDeadline']
+        jobEntry=Job(jobTitle=jobTitle,jobDescription=jobDescription,jobDeadline=jobDeadline
+                     ,jobType=jobType,jobLevel=jobLevel)
+        db.session.add(jobEntry)
+        db.session.commit()
+        return(jsonify({'msg':'Success'}))
+    except:
+        return jsonify({'error':'Internal Server Error'})
 
 
-
+@UserRouter.route('/JobListings',methods=['GET'])
+def getJobListings():
+    try:
+        jobs=Job.query.all()
+        return(jobs)
+    except:
+        return jsonify({'error':'Internal Server Error'})
 
 
 

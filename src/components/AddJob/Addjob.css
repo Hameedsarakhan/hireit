@@ -1,0 +1,39 @@
+/* AddJob.css */
+.container{
+    width:100%;
+    overflow-x: hidden;
+}
+.custom-heading {
+    font-size: 40px;
+    font-weight: bold;
+    text-align: center;
+    margin: 20px 0;
+  }
+  
+  .custom-form {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .custom-label {
+    font-weight: bold;
+    font-size: 20px;
+  }
+  
+  .custom-form input,
+  .custom-form textarea,
+  .custom-form select {
+    margin-bottom: 15px;
+  }
+  
+  .custom-button {
+    margin-top: 20px;
+    background-color:#008CBA;
+    border: none;
+  }
+  .custom-button:hover {
+   
+    background-color:#4CAF50;
+   
+  }
+  
