@@ -2,56 +2,43 @@ import React, { useState } from "react";
 import { Form, Button, Alert } from "react-bootstrap";
 import "./Login.css";
 import axios from "axios";
+import loginVideo from "./loginvideo.mp4";
 
-function App() { 
+function App() {
   const [errorMessages, setErrorMessages] = useState({});
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [credentials,setCredentials] = useState({
-    email:"",
-    password:""
-})
+  const [credentials, setCredentials] = useState({
+    email: "",
+    password: "",
+  });
 
-
-  // const database = [
-  //   {
-  //     username: "user1",
-  //     password: "pass1",
-  //   },
-  //   {
-  //     username: "user2",
-  //     password: "pass2",
-  //   },
-  // ];
-
-  const errors = {
-    uname: "invalid username",
-    pass: "invalid password",
+  const handleOnchange = (e) => {
+    setCredentials({
+      ...credentials,
+      [e.target.name]: e.target.value,
+    });
+    console.log(credentials);
   };
 
-  const handleOnchange = (e)=>{
-    setCredentials({
-      ...credentials,[e.target.name]:e.target.value
-     })
-     console.log(credentials)
-  }
-  
   const handleSubmit = (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
     const body = {
-      email : credentials.email,
-      password : credentials.password
-    }
-    axios.post('http://localhost:5000/user/login',body).then(res=>{
-      console.log(res.data.authToken)
-      const authToken = res.data.authToken
-      localStorage.setItem('authToken',authToken)
-      // setIsSubmitted(true);
-
-    }).catch(error=>{
-      setErrorMessages({ name: "pass", message: error.response.data.error });
-      // console.log(error.response.data)
-    })
+      email: credentials.email,
+      password: credentials.password,
+    };
+    axios
+      .post("http://localhost:5000/user/login", body)
+      .then((res) => {
+        console.log(res.data.authToken);
+        const authToken = res.data.authToken;
+        localStorage.setItem("authToken", authToken);
+        window.location.href = "/";
+      })
+      .catch((error) => {
+        setErrorMessages({ name: "pass", message: error.response.data.error });
+        // console.log(error.response.data)
+      });
   };
 
   const renderErrorMessage = (name) =>
@@ -66,13 +53,23 @@ function App() {
       <Form onSubmit={handleSubmit} method="POST">
         <Form.Group controlId="formBasicUsername" className="input-container">
           <Form.Label>Username</Form.Label>
-          <Form.Control type="email" name="email" onChange={handleOnchange} required />
+          <Form.Control
+            type="email"
+            name="email"
+            onChange={handleOnchange}
+            required
+          />
           {renderErrorMessage("uname")}
         </Form.Group>
 
         <Form.Group controlId="formBasicPassword" className="input-container">
           <Form.Label>Password</Form.Label>
-          <Form.Control type="password" name="password" onChange={handleOnchange} required />
+          <Form.Control
+            type="password"
+            name="password"
+            onChange={handleOnchange}
+            required
+          />
           {renderErrorMessage("pass")}
         </Form.Group>
 
@@ -87,6 +84,11 @@ function App() {
 
   return (
     <div className="app">
+      <div className="videodiv">
+        <video id="background-video" loop autoPlay>
+          <source src={loginVideo} type="video/mp4" />
+        </video>
+      </div>
       <div className="login-form">
         <div className="title">Sign In</div>
         {isSubmitted ? (
@@ -100,4 +102,3 @@ function App() {
 }
 
 export default App;
-

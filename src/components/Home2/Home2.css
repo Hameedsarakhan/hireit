@@ -1,0 +1,123 @@
+/* Home2.css */
+.responsive-para{
+  width:80%;
+  margin:auto;
+  
+}
+.mainimage{
+  width:100%;
+
+}
+.blue-div {
+  display: flex;
+  background-color:#008CBA; /* Blue color */
+  color: #fff; /* White text color */
+  padding-top: 50px;
+  padding-bottom: 50px;
+  width: 100%;
+  height:auto;
+  text-align: center;
+  margin-top: 50px;
+  align-items: center; 
+}
+
+.bold-para {
+  margin-top: 150px;
+  font-size: 20px;
+margin:auto;
+  font-weight: bold;
+  width:80%;
+}
+.learnmore_heading{
+  margin-top: 40px;
+  color:black;
+}
+.blue-button{
+  background-color: #008CBA;
+  border: #008CBA;
+  width:200px;
+  margin-top: 30px;
+  color:#f2f2f2;
+  height:40px;
+
+}
+.blue-button:hover{
+  background-color: #4CAF50;
+}
+
+.green-button{
+  border: #4CAF50;
+  background-color: #4CAF50;
+  width:200px;
+  margin-top: 10px;
+  color:#f2f2f2;
+  height:40px;
+
+}
+.green-button:hover{
+  background-color: #008CBA;
+  border: #008CBA;
+  
+}
+.home2 {
+    background-color: #f2f2f2;
+    color: #333;
+    padding:0px;
+  }
+  @keyframes colorChange {
+    0% {
+      color: black;
+    }
+    100% {
+      color: #008CBA;
+    }
+  }
+  .main-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .search-form {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  .animate-heading {
+    font-size: 50px;
+    font-weight: bold;
+    animation: colorChange 3s infinite alternate;
+  }
+  .different-color {
+    color: #ff5733;
+  }
+  .form-group input{
+    height:40px;
+  }
+
+
+  .form-section {
+    background-color: #ffffff;
+    padding: 20px;
+    margin: 20px;
+    margin-bottom: 50px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  h2 {
+    font-size: 24px;
+  }
+  
+  .search-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .homelabel {
+    font-size: 18px;
+    margin: 10px;
+  }
+  

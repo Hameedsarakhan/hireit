@@ -1,5 +1,8 @@
 /* Navbar.css */
 
+.nav-link {
+  color: #3ec9f7;
+}
 .custom-navbar .navbar-nav .nav-link {
   color: white;
   margin: 8px; 

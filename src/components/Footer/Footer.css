@@ -2,6 +2,22 @@
 body{
   overflow-x: hidden;
 }
+.footer-links {
+  display: flex;
+  justify-content: space-around;
+}
+
+.nav-link {
+  color: #3ec9f7;; /* Set the default link color to Bootstrap's primary color */
+}
+
+.nav-link:hover {
+  color:#3ec9f7;; 
+}
+
+
+
+
 
 .footer-links a:hover {
   color: #3ec9f7;

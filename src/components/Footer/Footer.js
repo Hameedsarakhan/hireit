@@ -1,6 +1,6 @@
-import React from 'react'; 
+import React from 'react';
 import './Footer.css';
-
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -12,13 +12,13 @@ const Footer = () => {
               <div className="footer-logo">
                 <img src="hireit logo.jpeg" alt="Logo" />
               </div>
-              
+
               <div className="footer-links">
-                <a href="/" className="text-decoration-none text-white">Home</a>
-                <a href="/about" className="text-decoration-none text-white">About</a>
-                <a href="/contact" className="text-decoration-none text-white">Contact</a>
+                <Link to="/Login" className="nav-link">Login</Link>
+                <Link to="/contact" className="nav-link">Contact</Link>
+                <Link to="/joblistings" className="nav-link">Job Listings</Link>
               </div>
-              <br />
+
               <div className="footer-contact">
                 <p>Address: 123 Main St, Pakistan</p>
                 <p>Email: hireit@gmail.com</p>

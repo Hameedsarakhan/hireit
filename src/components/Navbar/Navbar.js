@@ -1,13 +1,14 @@
-import React from 'react';
-import { Navbar, Nav, Container } from 'react-bootstrap';
-import './Navbar.css'; 
+import React from "react";
+import { Link } from "react-router-dom";
+import { Navbar, Nav, Container } from "react-bootstrap";
+import "./Navbar.css";
 
 const MyNavbar = () => {
   return (
     <Navbar className="custom-navbar" expand="lg" variant="dark">
       <Container>
         {/* Logo on the left */}
-        <Navbar.Brand href="#home">
+        <Navbar.Brand href="/home">
           <img
             src="hireit logo.jpeg"
             width="100"
@@ -23,10 +24,24 @@ const MyNavbar = () => {
         {/* Navigation links on the right */}
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ml-auto">
-            <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#about">About</Nav.Link>
-            <Nav.Link href="#services">Services</Nav.Link>
-            <Nav.Link href="#contact">Contact</Nav.Link>
+            <Link to="/login" className="nav-link">
+              Login
+            </Link>
+            <Link to="/contact" className="nav-link">
+              Contact
+            </Link>
+            <Link to="/AddJob" className="nav-link">
+              Add Job
+            </Link>
+            <Link to="/JobListings" className="nav-link">
+              Job Listings
+            </Link>
+            <Link to="/Home2" className="nav-link">
+              Home
+            </Link>
+            <Link to="/FAQS" className="nav-link">
+              Help
+            </Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
@@ -35,8 +50,3 @@ const MyNavbar = () => {
 };
 
 export default MyNavbar;
-
-
-
-
-

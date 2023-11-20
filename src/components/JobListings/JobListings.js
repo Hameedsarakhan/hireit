@@ -1,32 +1,56 @@
-// File: JobListings.js
 import React, { useEffect, useState } from "react";
 import { Card, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import MyNavbar from "../Navbar/Navbar";
+import Footer from "../Footer/Footer";
+import ResumeUploadModal from "../Upload/Upload";
 
-const JobListings = ({ loggedInUser, onDelete, onEdit }) => {
+const JobListings = () => {
   const [job, setJob] = useState([]);
+
+  //Used useEffect to make sure that the data that is to be displayed is fetched as soon as webpage loads.
+  //Declared function within useEffect to make it async.
   useEffect(() => {
-    axios.get("http://127.0.0.1:5000/user/JobListings").then((res) => {
-      let js = res.data;
-      setJob(js);
-      console.log(js);
-      console.log(job);
-    });
-    // let response = await job1;
-    // let js = JSON.parse(job1);
-    // console.log(js);
-    // setjobs(js);
-    // setjobs(response);
+    const getData = async () => {
+      try {
+        let res = axios.get("http://127.0.0.1:5000/user/Job");
+        let response = await res;
+        let jobJson = response.data;
+        setJob(jobJson);
+      } catch (e) {
+        console.error(e);
+      }
+    };
+    getData();
   }, []);
+
+  function OnDelete(jobId) {
+    //Make Confirmation box prettier
+    let deleteConfirmation = window.confirm("Do you want to delete?");
+    const postData = async (jobId) => {
+      try {
+        let data = axios.get(`http://127.0.0.1:5000/user/deleteJob/${jobId}`);
+        await data;
+        setJob(job.filter((item) => item.jobId !== jobId));
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    if (deleteConfirmation) {
+      postData(jobId);
+    }
+  }
+
   return (
-    <div className="container">
-      <h2 className="text-center my-4">Job Listings</h2>
-      <div className="row">
-        {job.map((element) => {
-          return (
-            <>
-              <div key={job.jobId} className="col-md-4 mb-4">
+    <>
+      <MyNavbar />
+      <div className="container">
+        <h2 className="text-center my-4">Job Listings</h2>
+        <div className="row">
+          {job.map((element, index) => {
+            return (
+              <div key={index} className="col-md-4 mb-4">
                 <Card>
                   <Card.Body>
                     <Card.Title>{element.jobTitle}</Card.Title>
@@ -34,36 +58,31 @@ const JobListings = ({ loggedInUser, onDelete, onEdit }) => {
                     <Card.Text>Deadline: {element.jobDeadline}</Card.Text>
                     <Card.Title>{element.jobType}</Card.Title>
                     <Card.Text>{element.jobLevel}</Card.Text>
-                    {/* <Card.Text>Deadline: {job.requirements}</Card.Text> */}
-                    {loggedInUser && loggedInUser.isAdmin ? (
-                      <>
-                        <Link to={`/edit-job/${element.jobId}`}>
-                          <Button
-                            variant="warning"
-                            onClick={() => onEdit(element.jobId)}
-                          >
-                            Edit
-                          </Button>
-                        </Link>
-                        <Button
-                          variant="danger"
-                          onClick={() => onDelete(element.jobId)}
-                        >
-                          Delete
-                        </Button>
-                      </>
-                    ) : (
-                      <p>No administrative rights</p>
-                    )}
-                    <Button variant="primary">Apply</Button>
+                    <>
+                      <Link to={`/edit-job/${element.jobId}`}>
+                        <Button variant="warning">Edit</Button>
+                      </Link>
+
+                      <Button
+                        variant="danger"
+                        onClick={() => OnDelete(element.jobId)}
+                      >
+                        Delete
+                      </Button>
+                    </>
+
+                    <p></p>
+
+                    <ResumeUploadModal />
                   </Card.Body>
                 </Card>
               </div>
-            </>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
-    </div>
+      <Footer />
+    </>
   );
 };
 

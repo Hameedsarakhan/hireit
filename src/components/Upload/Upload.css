@@ -1,0 +1,8 @@
+.uploadbtn{
+    background-color:#008CBA;
+    margin-top: 20px;
+}
+.uploadbtn:hover{
+    background-color:#4CAF50;
+    margin-top: 20px;
+}
