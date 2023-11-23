@@ -28,7 +28,7 @@ function App() {
       password: credentials.password,
     };
     axios
-      .post("http://localhost:5000/user/login", body)
+      .post("http://localhost:5000/admin/login", body)
       .then((res) => {
         console.log(res.data.authToken);
         const authToken = res.data.authToken;

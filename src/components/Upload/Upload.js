@@ -1,16 +1,18 @@
 import React, { useState } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import "./Upload.css";
+import axios from "axios";
 
-const ResumeUploadModal = () => {
+const ResumeUploadModal = ({ jobId }) => {
   const [showModal, setShowModal] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [file, setFile] = useState(null);
   const [error, setError] = useState("");
 
-  const handleFileChange = (e) => {
-    const selectedFile = e.target.files[0];
+  const handleFileChange = async (e) => {
+    let selectedFile = e.target.files[0];
+
     if (
       selectedFile &&
       selectedFile.type === "application/pdf" &&
@@ -29,10 +31,33 @@ const ResumeUploadModal = () => {
 
     if (name && email && file) {
       // file submission
-      console.log("Name:", name);
-      console.log("Email:", email);
-      console.log("File:", file);
-      handleClose();
+      // console.log("Name:", name);  
+      // console.log("Email:", email);
+      // console.log("jobId:", jobId);
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      var base64File
+      reader.onloadend = () => {
+        base64File = reader.result.split(',')[1];
+
+        const body = {
+          name,
+          email,
+          jobId,
+          resumeFile: base64File
+
+        }
+        axios.post('http://localhost:5000/user/', body, {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }).then(res => {
+          console.log('done')
+        }).catch(err => {
+          console.log(err.response.data)
+        })
+        handleClose();
+      }
     } else {
       setError("Please fill in all fields and upload a PDF file");
     }

@@ -1,7 +1,8 @@
 from flask import Flask
 from flask_cors import CORS
 from database import db
-from userRoutes import UserRouter
+from adminRouter import AdminRouter
+from userRouter import UserRouter
 import os
 from mail import mail
 from localvars import email,password
@@ -9,16 +10,19 @@ from localvars import email,password
 file_path = os.path.abspath(os.getcwd())+'\\instance\\test.db'
 
 app = Flask(__name__)
-app.config.update(
+app.config.update( 
     MAIL_SERVER='smtp.gmail.com',
-    MAIL_PORT='465',
+    MAIL_PORT='465', 
     MAIL_USE_SSL=True,
-    MAIL_USERNAME=email,
+    MAIL_USERNAME=email, 
     MAIL_PASSWORD=password,
 )
 CORS(app)  # Enable CORS for all routes
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///'+file_path
 app.config["SQLAlchemy_TRACK_MODIFICATIONS"] = False
+
+# Blueprints/routes
+app.register_blueprint(AdminRouter,url_prefix="/admin")
 app.register_blueprint(UserRouter,url_prefix="/user")
 
 

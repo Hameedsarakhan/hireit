@@ -14,7 +14,7 @@ const JobListings = () => {
   useEffect(() => {
     const getData = async () => {
       try {
-        let res = axios.get("http://127.0.0.1:5000/user/Job");
+        let res = axios.get("http://127.0.0.1:5000/admin/Job");
         let response = await res;
         let jobJson = response.data;
         setJob(jobJson);
@@ -73,7 +73,7 @@ const JobListings = () => {
 
                     <p></p>
 
-                    <ResumeUploadModal />
+                    <ResumeUploadModal jobId={element.jobId} />
                   </Card.Body>
                 </Card>
               </div>

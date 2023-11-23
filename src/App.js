@@ -9,6 +9,7 @@ import EditJob from "./components/EditiJob/EditJob";
 import JobListings from "./components/JobListings/JobListings";
 import AddJob from "./components/AddJob/Addjob";
 import ResumeUploadModal from "./components/Upload/Upload";
+import DisplayResume from "./components/Displayresume/DisplayResume";
 
 function App() {
   //ABHI ISKI NEED NHI HAI
@@ -32,6 +33,7 @@ function App() {
           <Route path="/Home2" element={<Home2 />} />
           <Route path="/FAQS" element={<FAQS />} />
           <Route path="/upload" element={<ResumeUploadModal />} />
+          <Route path="/displayresume" element={<DisplayResume/>} />
         </Routes>
       </BrowserRouter>
     </div>
