@@ -10,7 +10,7 @@ from localvars import email,password
 file_path = os.path.abspath(os.getcwd())+'\\instance\\test.db'
 
 app = Flask(__name__)
-app.config.update( 
+app.config.update(
     MAIL_SERVER='smtp.gmail.com',
     MAIL_PORT='465', 
     MAIL_USE_SSL=True,

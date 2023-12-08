@@ -1,23 +1,23 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Card, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import axios from "axios";
 import MyNavbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
+import useDataLoader from "./useDataLoader";
+import axios from "axios";
 import ResumeUploadModal from "../Upload/Upload";
+import "./JobListings.css";
 
 const JobListings = () => {
-  const [job, setJob] = useState([]);
+  const { data: job, loading, error } = useDataLoader("http://127.0.0.1:5000/admin/Job");
 
-  //Used useEffect to make sure that the data that is to be displayed is fetched as soon as webpage loads.
-  //Declared function within useEffect to make it async.
   useEffect(() => {
     const getData = async () => {
       try {
-        let res = axios.get("http://127.0.0.1:5000/admin/Job");
+        let res = await axios.get("http://127.0.0.1:5000/admin/Job");
         let response = await res;
         let jobJson = response.data;
-        setJob(jobJson);
+        // No need to set jobJson as useDataLoader already handles this
       } catch (e) {
         console.error(e);
       }
@@ -25,21 +25,32 @@ const JobListings = () => {
     getData();
   }, []);
 
-  function OnDelete(jobId) {
-    //Make Confirmation box prettier
-    let deleteConfirmation = window.confirm("Do you want to delete?");
-    const postData = async (jobId) => {
-      try {
-        let data = axios.get(`http://127.0.0.1:5000/user/deleteJob/${jobId}`);
-        await data;
-        setJob(job.filter((item) => item.jobId !== jobId));
-      } catch (err) {
-        console.error(err);
-      }
-    };
+  const handleDelete = async (jobId) => {
+    const deleteConfirmation = window.confirm("Do you want to delete?");
     if (deleteConfirmation) {
-      postData(jobId);
+      try {
+        await axios.get(`http://127.0.0.1:5000/admin/deleteJob/${jobId}`);
+        // it's managed by useDataLoader
+      } catch (error) {
+        console.error(error);
+      }
     }
+  };
+
+  if (loading) {
+    return (
+      <>
+        <MyNavbar />
+        <div className="container">
+          <h2 className="text-center my-4">Job Listings</h2>
+          <div className="row">
+            {/* Conditional rendering for loading state */}
+            <div className="text-center">Loading...</div>
+          </div>
+        </div>
+        <Footer />
+      </>
+    );
   }
 
   return (
@@ -60,20 +71,20 @@ const JobListings = () => {
                     <Card.Text>{element.jobLevel}</Card.Text>
                     <>
                       <Link to={`/edit-job/${element.jobId}`}>
-                        <Button variant="warning">Edit</Button>
+                        <Button className="editbtn">Edit</Button>
                       </Link>
 
                       <Button
-                        variant="danger"
-                        onClick={() => OnDelete(element.jobId)}
+                        onClick={() => handleDelete(element.jobId)}
+                        className="deletebtn"
                       >
                         Delete
                       </Button>
                     </>
 
                     <p></p>
+                      <ResumeUploadModal jobId={element.jobId} className="applybtn" />
 
-                    <ResumeUploadModal jobId={element.jobId} />
                   </Card.Body>
                 </Card>
               </div>

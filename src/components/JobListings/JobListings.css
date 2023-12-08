@@ -1,0 +1,23 @@
+.deletebtn{
+    background-color:#008CBA;
+    margin:5px;
+}
+.editbtn{
+    background-color:#008CBA;
+    margin:5px;
+}
+.deletebtn:hover{
+    background-color:#4CAF50;
+    margin:5px;
+}
+.editbtn:hover{
+    background-color:#4CAF50;
+    margin:5px;
+}
+.applybtn{
+    background-color:#4CAF50;
+    margin:5px;
+}
+.applybtn:hover{
+    background-color:#008CBA;
+    margin:5px;}

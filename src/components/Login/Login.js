@@ -74,9 +74,7 @@ function App() {
         </Form.Group>
 
         <div className="button-container">
-          <Button variant="primary" type="submit">
-            Submit
-          </Button>
+          <Button type="submit" className="login-button">Submit</Button>
         </div>
       </Form>
     </div>

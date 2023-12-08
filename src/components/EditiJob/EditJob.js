@@ -20,7 +20,7 @@ function EditJob() {
   useEffect(() => {
     const getEditableData = async () => {
       try {
-        let data = axios.get(`http://localhost:5000/user/editJob/${id}`);
+        let data = axios.get(`http://localhost:5000/admin/editJob/${id}`);
         let response = await data;
         setEditJob(response.data);
       } catch (e) {

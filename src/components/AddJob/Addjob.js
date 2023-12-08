@@ -24,7 +24,7 @@ const AddJob = () => {
     const postJob = async () => {
       try {
         let postResponse = axios.post(
-          "http://localhost:5000/user/Job",
+          "http://localhost:5000/admin/Job",
           jobData
         );
         await postResponse;
