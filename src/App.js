@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import ReactDOM from "react-dom";
+import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./components/Login/Login";
 import Contact from "./components/Contact/Contact";
@@ -10,16 +9,9 @@ import JobListings from "./components/JobListings/JobListings";
 import AddJob from "./components/AddJob/Addjob";
 import ResumeUploadModal from "./components/Upload/Upload";
 import DisplayResume from "./components/Displayresume/DisplayResume";
+import NotFound from "./components/notfound/notfound";
 
 function App() {
-  //ABHI ISKI NEED NHI HAI
-
-  // const [jobList, setJobList] = useState([]);
-
-  // const handleAddJob = (jobData) => {
-  //   setJobList((prevJobs) => [...prevJobs, jobData]);
-  // };
-
   return (
     <div className="App">
       <BrowserRouter>
@@ -33,13 +25,15 @@ function App() {
           <Route path="/Home2" element={<Home2 />} />
           <Route path="/FAQS" element={<FAQS />} />
           <Route path="/upload" element={<ResumeUploadModal />} />
-          <Route path="/displayresume" element={<DisplayResume/>} />
+          <Route path="/displayresume" element={<DisplayResume />} />
+          
+          {/* Catch-all route for handling 404 errors */}
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
     </div>
   );
 }
 
-// const root = ReactDOM.createRoot(document.getElementById("root"));
-// root.render(<App />);
 export default App;
+

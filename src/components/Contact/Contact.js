@@ -12,28 +12,28 @@ function ContactForm() {
   };
 
   const [formData, setFormData] = useState(initialFormData);
+  const [loading, setLoading] = useState(false); // Added the 'loading' state
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const sendContactFormData = async () => {
-      try {
-        let sendData = axios.post(
-          "http://localhost:5000/admin/contact",
-          formData
-        );
-        let response = await sendData;
-        setFormData(initialFormData);
-        alert(response.data.msg);
-      } catch (e) {
-        console.error(e);
-      }
-    };
-    sendContactFormData();
+    setLoading(true); // Set loading to true when submitting the form
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/admin/contact",
+        formData
+      );
+      setFormData(initialFormData);
+      alert(response.data.msg);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false); // Set loading to false after form submission completes
+    }
   };
 
   return (
@@ -72,9 +72,13 @@ function ContactForm() {
                 onChange={handleChange}
               />
             </div>
-            <button type="submit" className="btn btn-primary">
-              Submit
-            </button>
+            {loading ? (
+              <div>Loading...</div>
+            ) : (
+              <button type="submit" className="btn btn-primary">
+                Submit
+              </button>
+            )}
           </form>
         </div>
       </div>
