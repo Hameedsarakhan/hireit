@@ -39,7 +39,7 @@ const MyNavbar = () => {
             <Link to="/Home2" className="nav-link">
               Home
             </Link>
-            <Link to="/FAQS" className="nav-link">
+            <Link to="/Emails" className="nav-link">
               Help
             </Link>
           </Nav>

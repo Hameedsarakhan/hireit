@@ -1,0 +1,14 @@
+.emailbtn{
+    background-color:#008CBA;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-color: #008CBA;
+    color:aliceblue;
+    height:40px;
+    border-radius: 4px 4px 4px 4px;
+}
+.emailbtn:hover{
+    background-color:#4CAF50;
+    margin-top: 20px;
+    
+}
