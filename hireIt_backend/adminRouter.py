@@ -2,22 +2,22 @@
 from flask import Blueprint, jsonify,request
 from database import db
 from flask_bcrypt import Bcrypt
-import jwt
 from datetime import datetime, timedelta
 from localvars import SECRET_KEY
-from dbModels import User, Job
+from dbModels import User, Job,ApplyJob
 from flask_mail import Message
 from mail import mail
-
+import base64
+import jwt
 # from app import mail
-# from jwt.exceptions import DecodeError
+# this file was (UserRouter) is now AdminRouter and new UserRouter is used for applyingJobs api
 
 
-UserRouter = Blueprint('user', __name__)
+AdminRouter = Blueprint('admin', __name__)
 bcrypt = Bcrypt()
 
-@UserRouter.route('/login', methods=['POST'])
-def user_signup():
+@AdminRouter.route('/login', methods=['POST'])
+def admin_signup():
     try:
         json = request.json 
         email = json['email'] 
@@ -34,13 +34,13 @@ def user_signup():
         expiration_time = datetime.utcnow() + timedelta(hours=9999)
         token_payload = {'id': user.id, 'exp': expiration_time}
         token = jwt.encode(token_payload, SECRET_KEY, algorithm='HS256')
-    
+
         return jsonify({'authToken':token}),200
     except:
         return jsonify({'message':"Internal Server Error"}),500
 
 
-@UserRouter.route('/getid', methods=['POST'])
+@AdminRouter.route('/getid', methods=['POST'])
 def getId():
     try:
         authToken = request.headers.get('authToken')
@@ -54,7 +54,7 @@ def getId():
         return  jsonify({'message':'Please authenticate using a valid token'})
 
 
-@UserRouter.route('/Job',methods=['GET','POST'])
+@AdminRouter.route('/Job',methods=['GET','POST'])
 def AddJob():
     if(request.method=='POST'):
         try:
@@ -78,8 +78,8 @@ def AddJob():
         except:
             return jsonify({'error': 'Internal Server Error'}),500
 
-
-@UserRouter.route('/deleteJob/<int:jobId>',methods=['GET'])
+# to delete job
+@AdminRouter.route('/deleteJob/<int:jobId>',methods=['GET'])
 def deleteJob(jobId):
     try:
         Job.query.filter_by(jobId=jobId).delete()
@@ -88,8 +88,8 @@ def deleteJob(jobId):
     except:
         return(jsonify({"error":"An error occured. Please retry"})),500
 
-
-@UserRouter.route('/editJob/<int:jobId>',methods=['GET','POST'])
+# to edit job
+@AdminRouter.route('/editJob/<int:jobId>',methods=['GET','POST'])
 def editJob(jobId):
     if(request.method=='GET'):
         try:
@@ -111,8 +111,8 @@ def editJob(jobId):
         except:
             return(jsonify({"error":"An error occured. Please retry"})),500
 
-
-@UserRouter.route('/contact',methods=['POST'])
+# Contact us
+@AdminRouter.route('/contact',methods=['POST'])
 def contact():
     try:
         contactJSON=request.json
@@ -129,6 +129,27 @@ def contact():
         return(jsonify({"msg":"Successfully sent data"}))
     except:
         return(jsonify({"error":"An error occured."})),500
+
+
+
+# Display All resume 
+@AdminRouter.route('/getresume',methods=['GET'])
+def getResume():
+    try:
+        resumes = ApplyJob.query.with_entities(ApplyJob.resume).all() 
+        serialized_resumes = [base64.b64encode(resume[0]).decode('utf-8') for resume in resumes]
+
+        return jsonify({'resumes': serialized_resumes})    
+    except Exception as error:
+        return error
+
+
+
+
+
+
+
+
 
 
 

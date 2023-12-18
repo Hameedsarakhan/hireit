@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import JobForm from "../JobForm/JobForm";
+import App from "../Login/Login";
 
 function EditJob() {
   //This is to get the id that would be send via URL
@@ -20,7 +21,7 @@ function EditJob() {
   useEffect(() => {
     const getEditableData = async () => {
       try {
-        let data = axios.get(`http://localhost:5000/user/editJob/${id}`);
+        let data = axios.get(`http://localhost:5000/admin/editJob/${id}`);
         let response = await data;
         setEditJob(response.data);
       } catch (e) {
@@ -47,7 +48,7 @@ function EditJob() {
       const postEditedData = async () => {
         try {
           let response = axios.post(
-            `http://localhost:5000/user/editJob/${id}`,
+            `http://localhost:5000/admin/editJob/${id}`,
             editJob
           );
           await response;
@@ -60,14 +61,21 @@ function EditJob() {
     }
   };
 
+  const loggedIn = localStorage.getItem("loggedIn");
   return (
-    <JobForm
-      heading="Edit Job"
-      handleChange={handleChange}
-      jobData={editJob}
-      handleSubmit={handleSubmit}
-      buttonTitle="Update Changes"
-    />
+    <>
+      {loggedIn == "true" ? (
+        <JobForm
+          heading="Edit Job"
+          handleChange={handleChange}
+          jobData={editJob}
+          handleSubmit={handleSubmit}
+          buttonTitle="Update Changes"
+        />
+      ) : (
+        <App />
+      )}
+    </>
   );
 }
 

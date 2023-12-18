@@ -9,7 +9,9 @@ import EditJob from "./components/EditiJob/EditJob";
 import JobListings from "./components/JobListings/JobListings";
 import AddJob from "./components/AddJob/Addjob";
 import ResumeUploadModal from "./components/Upload/Upload";
-
+import DisplayResume from "./components/Displayresume/DisplayResume";
+import PageNotFound from "./components/PageNotFound/PageNotFound";
+import { useEffect } from "react";
 function App() {
   //ABHI ISKI NEED NHI HAI
 
@@ -18,6 +20,9 @@ function App() {
   // const handleAddJob = (jobData) => {
   //   setJobList((prevJobs) => [...prevJobs, jobData]);
   // };
+  // useEffect(() => {
+  //   localStorage.setItem("loggedIn", false);
+  // }, []);
 
   return (
     <div className="App">
@@ -32,6 +37,8 @@ function App() {
           <Route path="/Home2" element={<Home2 />} />
           <Route path="/FAQS" element={<FAQS />} />
           <Route path="/upload" element={<ResumeUploadModal />} />
+          <Route path="/displayresume" element={<DisplayResume />} />
+          <Route path="*" element={<PageNotFound />} />
         </Routes>
       </BrowserRouter>
     </div>

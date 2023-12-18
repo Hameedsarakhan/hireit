@@ -23,7 +23,7 @@ function ContactForm() {
     const sendContactFormData = async () => {
       try {
         let sendData = axios.post(
-          "http://localhost:5000/user/contact",
+          "http://localhost:5000/admin/contact",
           formData
         );
         let response = await sendData;

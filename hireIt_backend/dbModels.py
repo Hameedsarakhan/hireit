@@ -19,3 +19,10 @@ class Job(db.Model):
     jobDeadline:str = db.Column(db.String(20),nullable=False)
 
 #didnt add __repr__ qke wo masle karraha tha GET mai
+@dataclass
+class ApplyJob(db.Model):
+    email = db.Column(db.String(50) , nullable=False , primary_key=True)
+    username = db.Column(db.String(100),nullable= False)
+    resume = db.Column(db.LargeBinary, nullable=False)
+    jobId = db.Column( db.Integer )
+    
