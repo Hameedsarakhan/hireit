@@ -165,6 +165,34 @@ def getResume():
 
 
 
+# to send emails to the selected candidates
+@AdminRouter.route('/sendemails',methods=['POST'])
+def sendEmails():
+    try:
+        body = request.json 
+        candidatesLists = body['candidatesLists'] 
+        email_template = body['EmailTemplate']
+        # if admin want to use custom email
+        customEmail = body['customEmail'] 
+        if(customEmail):
+            adminEmail = body['adminEmail'] 
+        else:
+        # getting the login email of admin as default email
+            admin_id = getId(request)
+            adminEmail = User.query.filter_by(id=admin_id).value(User.email)
+
+        for Email in candidatesLists:
+            email = Message("Contact attempt by :"+ adminEmail, sender=adminEmail, recipients=[Email])
+            email.body = email_template
+            mail.send(email)
+
+        return jsonify({"Message": "Emails sended to selected candidates"+str(candidatesLists)}),200
+        
+    except Exception as e:
+        return jsonify({"Message":str(e)}),500
+    
+    
+
 
 
 
