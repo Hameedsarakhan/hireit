@@ -8,7 +8,11 @@ from dbModels import User, Job,ApplyJob
 from flask_mail import Message
 from mail import mail
 import base64
+<<<<<<< HEAD
 import jwt
+=======
+     
+>>>>>>> 287bae62916bc9612cce7c566b920685d89680b4
 # from app import mail
 # this file was (UserRouter) is now AdminRouter and new UserRouter is used for applyingJobs api
 
@@ -36,22 +40,41 @@ def admin_signup():
         token = jwt.encode(token_payload, SECRET_KEY, algorithm='HS256')
 
         return jsonify({'authToken':token}),200
-    except:
-        return jsonify({'message':"Internal Server Error"}),500
+    except Exception as e :
+        return jsonify({'message':e}),500
 
 
-@AdminRouter.route('/getid', methods=['POST'])
-def getId():
+def getId(request):
     try:
         authToken = request.headers.get('authToken')
-        
+        if len(authToken) <=0 :
+            raise ValueError("Token not provided")
         decoded_token = jwt.decode(authToken, SECRET_KEY, algorithms=['HS256'])
         user_id = decoded_token['id']
-       
 
-        return jsonify({"id":user_id})
-    except :
-        return  jsonify({'message':'Please authenticate using a valid token'})
+        if isinstance(user_id, (int, str)):
+            return user_id
+        else:
+            raise TypeError('Invalid user_id type')
+
+
+    except jwt.InvalidTokenError:
+        raise ValueError('Invalid token')
+    
+    except Exception as e:
+        raise ValueError(f'An error occurred: {e}')
+  
+# to test the getIDfucntion
+@AdminRouter.route('/getid', methods=['GET'])
+def fetchAdmin():
+    try:
+        user_id = getId(request=request)
+        print(user_id)
+        return 'true',200
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 401
+
 
 
 @AdminRouter.route('/Job',methods=['GET','POST'])

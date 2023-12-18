@@ -26,6 +26,7 @@ const MyNavbar = () => {
         {/* Navigation links on the right */}
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ml-auto">
+<<<<<<< HEAD
             {loggedIn == "true" ? (
               <>
                 <Link to="/Home2" className="nav-link">
@@ -58,6 +59,26 @@ const MyNavbar = () => {
                 </Link>
               </>
             )}
+=======
+            <Link to="/login" className="nav-link">
+              Login
+            </Link>
+            <Link to="/contact" className="nav-link">
+              Contact
+            </Link>
+            <Link to="/AddJob" className="nav-link">
+              Add Job
+            </Link>
+            <Link to="/JobListings" className="nav-link">
+              Job Listings
+            </Link>
+            <Link to="/Home2" className="nav-link">
+              Home
+            </Link>
+            <Link to="/Emails" className="nav-link">
+              Help
+            </Link>
+>>>>>>> 287bae62916bc9612cce7c566b920685d89680b4
           </Nav>
         </Navbar.Collapse>
       </Container>
