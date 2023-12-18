@@ -31,7 +31,7 @@ function App() {
           <Route path="/AddJob" element={<AddJob />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/Home2" element={<Home2 />} />
-          <Route path="/FAQS" element={<FAQS />} />
+          <Route path="/  " element={<FAQS />} />
           <Route path="/upload" element={<ResumeUploadModal />} />
           <Route path="/displayresume" element={<DisplayResume/>} />
         </Routes>
