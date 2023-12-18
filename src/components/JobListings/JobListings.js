@@ -9,12 +9,17 @@ import ResumeUploadModal from "../Upload/Upload";
 import "./JobListings.css";
 
 const JobListings = () => {
-  const { data: job, loading, error } = useDataLoader("http://127.0.0.1:5000/admin/Job");
+  const loggedIn = localStorage.getItem("loggedIn");
+  const {
+    data: job,
+    loading,
+    error,
+  } = useDataLoader("http://127.0.0.1:5000/admin/Job");
 
   useEffect(() => {
     const getData = async () => {
       try {
-        let res = await axios.get("http://127.0.0.1:5000/admin/Job");
+        let res = axios.get("http://127.0.0.1:5000/admin/Job");
         let response = await res;
         let jobJson = response.data;
         // No need to set jobJson as useDataLoader already handles this
@@ -30,7 +35,7 @@ const JobListings = () => {
     if (deleteConfirmation) {
       try {
         await axios.get(`http://127.0.0.1:5000/admin/deleteJob/${jobId}`);
-        // it's managed by useDataLoader
+        window.location.href = "/jobListings"; // it's managed by useDataLoader
       } catch (error) {
         console.error(error);
       }
@@ -69,22 +74,25 @@ const JobListings = () => {
                     <Card.Text>Deadline: {element.jobDeadline}</Card.Text>
                     <Card.Title>{element.jobType}</Card.Title>
                     <Card.Text>{element.jobLevel}</Card.Text>
-                    <>
-                      <Link to={`/edit-job/${element.jobId}`}>
-                        <Button className="editbtn">Edit</Button>
-                      </Link>
+                    {loggedIn == "true" ? (
+                      <>
+                        <Link to={`/edit-job/${element.jobId}`}>
+                          <Button className="editbtn">Edit</Button>
+                        </Link>
 
-                      <Button
-                        onClick={() => handleDelete(element.jobId)}
-                        className="deletebtn"
-                      >
-                        Delete
-                      </Button>
-                    </>
-
-                    <p></p>
-                      <ResumeUploadModal jobId={element.jobId} className="applybtn" />
-
+                        <Button
+                          onClick={() => handleDelete(element.jobId)}
+                          className="deletebtn"
+                        >
+                          Delete
+                        </Button>
+                      </>
+                    ) : (
+                      <ResumeUploadModal
+                        jobId={element.jobId}
+                        className="applybtn"
+                      />
+                    )}
                   </Card.Body>
                 </Card>
               </div>

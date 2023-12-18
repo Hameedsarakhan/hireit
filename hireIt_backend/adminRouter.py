@@ -2,13 +2,13 @@
 from flask import Blueprint, jsonify,request
 from database import db
 from flask_bcrypt import Bcrypt
-import jwt
 from datetime import datetime, timedelta
 from localvars import SECRET_KEY
 from dbModels import User, Job,ApplyJob
 from flask_mail import Message
 from mail import mail
 import base64
+import jwt
      
 # from app import mail
 # this file was (UserRouter) is now AdminRouter and new UserRouter is used for applyingJobs api
@@ -35,7 +35,7 @@ def admin_signup():
         expiration_time = datetime.utcnow() + timedelta(hours=9999)
         token_payload = {'id': user.id, 'exp': expiration_time}
         token = jwt.encode(token_payload, SECRET_KEY, algorithm='HS256')
-    
+
         return jsonify({'authToken':token}),200
     except Exception as e :
         return jsonify({'message':e}),500

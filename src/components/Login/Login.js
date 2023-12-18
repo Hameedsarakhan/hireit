@@ -33,10 +33,15 @@ function App() {
         console.log(res.data.authToken);
         const authToken = res.data.authToken;
         localStorage.setItem("authToken", authToken);
-        window.location.href = "/";
+        window.location.href = "/home2";
+      })
+      .then(() => {
+        localStorage.setItem("loggedIn", true);
       })
       .catch((error) => {
         setErrorMessages({ name: "pass", message: error.response.data.error });
+        localStorage.setItem("loggedIn", false);
+
         // console.log(error.response.data)
       });
   };
@@ -74,7 +79,9 @@ function App() {
         </Form.Group>
 
         <div className="button-container">
-          <Button type="submit" className="login-button">Submit</Button>
+          <Button type="submit" className="login-button">
+            Submit
+          </Button>
         </div>
       </Form>
     </div>

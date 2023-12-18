@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./Addjob.css";
 import axios from "axios";
 import JobForm from "../JobForm/JobForm";
+import App from "../Login/Login";
 
 const AddJob = () => {
   const [jobData, setJobData] = useState({
@@ -37,15 +38,20 @@ const AddJob = () => {
     postJob();
   };
 
-  return (
-    <JobForm
-      heading="Job Postings"
-      handleChange={handleChange}
-      jobData={jobData}
-      handleSubmit={handleSubmit}
-      buttonTitle="Add Job"
-    />
-  );
+  if (localStorage.getItem("loggedIn") == "true") {
+    return (
+      <JobForm
+        heading="Job Postings"
+        handleChange={handleChange}
+        jobData={jobData}
+        handleSubmit={handleSubmit}
+        buttonTitle="Add Job"
+      />
+    );
+  } else {
+    console.log(localStorage.getItem("loggedIn"));
+    return <App />;
+  }
 };
 
 export default AddJob;
