@@ -3,6 +3,7 @@ from database import db
 from dbModels import User, Job ,ApplyJob
 from io import BytesIO
 import base64
+import os
 
 
 
@@ -36,9 +37,16 @@ def applyJob():
             return jsonify({"success":False,"error":"An application with given resume has already been registered for this job"}),400      
         
         else:
+            file_path = f"./Resumes/{email}.pdf"  # Change the file extension based on your actual file type (e.g., .pdf, .docx)
+            if os.path.exists(file_path):
+                print(f"File with this name already exists. Please choose a different filename.")
+            else:
+                with open(file_path, "wb") as file:
+                    file.write(resumeFile)
             newApplication = ApplyJob(email=email,username=name,jobId=JobId,resume = resumeFile)
             db.session.add(newApplication)
             db.session.commit()
+           
             print("done")
             return jsonify({"success":True,"message":"Application successful"})
         
