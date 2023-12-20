@@ -24,5 +24,13 @@ class ApplyJob(db.Model):
     email = db.Column(db.String(50) , nullable=False , primary_key=True)
     username = db.Column(db.String(100),nullable= False)
     resume = db.Column(db.LargeBinary, nullable=False)
-    jobId = db.Column( db.Integer )
+    jobId = db.Column( db.Integer)
+
+
+@dataclass
+class summarized(db.Model):
+    jobId:int = db.Column(db.Integer,nullable=False,primary_key=True)
+    email:str = db.Column(db.String(50) , nullable=False,primary_key=True)
+    summary:str=db.Column(db.String(1500),nullable=False)
+    matched:int=db.Column(db.Integer,nullable=False)
     

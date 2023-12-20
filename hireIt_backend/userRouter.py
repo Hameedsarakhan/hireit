@@ -1,11 +1,11 @@
 from flask import Blueprint, jsonify,request
 from database import db
-from dbModels import ApplyJob
+from dbModels import ApplyJob,summarized
 import base64
+import os
 from resume_summarizer_using_bart_final import BertSummarize
-from resumerankingusingbertfinal import BertRanking
 from integrationdictformat import extract_information
-
+from resumerankingusingbertfinal import BertRanking
 
 
 UserRouter = Blueprint('user', __name__)
@@ -39,11 +39,27 @@ def applyJob():
             return jsonify({"success":False,"error":"An application with given resume has already been registered for this job"}),400      
         
         else:
+            file_path = f"./Resumes/{email}.pdf"  # Change the file extension based on your actual file type (e.g., .pdf, .docx)
+            if os.path.exists(file_path):
+                print(f"File with this name already exists. Please choose a different filename.")
+            else:
+                with open(file_path, "wb") as file:
+                    file.write(resumeFile)
+                
+            
+            summary=BertSummarize(file_path)
+            matched=BertRanking(file_path,"Seeking a skilled and motivated web developer with expertise in front-end and back-end technologies to contribute to the design, development, and maintenance of innovative and user-friendly web applications")
+            # print(summary["summary"])
+            matchedPercent=(matched)*100
+
             newApplication = ApplyJob(email=email,username=name,jobId=JobId,resume = resumeFile)
+            newSummarized=summarized(jobId=JobId,email=email,summary=summary["summary"],matched=matchedPercent)
             db.session.add(newApplication)
+            db.session.add(newSummarized)
             db.session.commit()
-            print("done")
-            return jsonify({"success":True,"message":"Application successful"})
+            parsed=(extract_information(file_path))
+            print(parsed)
+            return jsonify({"success":True,"message":"Application successful","data":parsed})
         
 
     except Exception as error:

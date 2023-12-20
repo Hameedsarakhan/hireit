@@ -56,7 +56,7 @@ const ResumeUploadModal = ({ jobId }) => {
             },
           })
           .then((res) => {
-            console.log("done");
+            console.log(res.data);
           })
           .catch((err) => {
             console.log(err.response.data);

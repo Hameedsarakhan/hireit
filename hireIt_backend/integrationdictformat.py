@@ -28,11 +28,11 @@ from spacy.matcher import Matcher
 from pyresparser import ResumeParser
 
 def extract_information(file_path):
-    def doctotext(m):
-        temp = docx2txt.process(m)
-        resume_text = [line.replace('\t', ' ') for line in temp.split('\n') if line]
-        text = ' '.join(resume_text)
-        return text
+    # def doctotext(m):
+    #     temp = docx2txt.process(m)
+    #     resume_text = [line.replace('\t', ' ') for line in temp.split('\n') if line]
+    #     text = ' '.join(resume_text)
+    #     return text
 
     def pdftotext(m):
         text = ''
@@ -105,7 +105,7 @@ def extract_information(file_path):
     #     text_input = pdftotext(file_path)
     # else:
     #     return {"error": "File not supported"}
-    text_input=file_path
+    text_input=pdftotext(file_path)
 
     extracted_edu = extract_edu(text_input)
     extracted_school = extract_school(text_input)

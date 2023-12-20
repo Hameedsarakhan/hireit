@@ -27,16 +27,7 @@ def extract_text_from_pdf(path):
 
 """#SAMPLE DATA"""
 
-# Sample job description
-# job1 = "NLP Specialist: Develop and implement NLP algorithms. Proficiency in Python, NLP libraries, and ML frameworks required."
-# job2= '''Seeking a skilled and motivated web developer with expertise in front-end and back-end technologies to contribute to the design, development, and maintenance of innovative and user-friendly web applications.'''
-# job3= '''Hiring a data scientist with advanced analytical and machine learning skills to extract actionable insights from complex datasets, driving data-driven decision-making for business growth.'''
-# job_desc= [job1, job2, job3]
 
-# List of resume PDF file paths
-# resume_paths = ["/content/Abiha.pdf","/content/Abihaa.pdf","/content/Abihaaa.pdf","/content/H.pdf",
-#                 "/content/Hamna.pdf","/content/Hamnaa.pdf", "/content/Maham.pdf", "/content/Mahnoor.pdf",
-#                 "/content/Moin.pdf", "/content/Moinn.pdf", "/content/Sara.pdf", "/content/Saraa2.pdf"]
 
 """#RANKING USING BERT MODEL"""
 
@@ -54,7 +45,7 @@ def BertRanking(resume_paths,job_desc):
       resume_embeddings = []
 
           # Tokenize and get embeddings for each resume
-      resume_text = (resume_paths)
+      resume_text = extract_text_from_pdf(resume_paths)
       resume_tokens = tokenizer(resume_text, return_tensors='pt', truncation=True, padding=True)
       resume_embedding = model(**resume_tokens).last_hidden_state.mean(dim=1)
       resume_embeddings.append((resume_paths, resume_embedding))
@@ -62,7 +53,7 @@ def BertRanking(resume_paths,job_desc):
           # Calculate cosine similarity
       similarities = [cosine_similarity(job_desc_embeddings.detach().numpy(), resume_embedding[1].detach().numpy()).item() for resume_embedding in resume_embeddings]
 
-      return(similarities)
+      return(similarities[0])
           # Rank resumes based on similarity
     #   ranked_resumes = sorted(zip(resume_paths, similarities), key=lambda x: x[1], reverse=True)
 
