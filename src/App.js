@@ -10,25 +10,8 @@ import AddJob from "./components/AddJob/Addjob";
 import ResumeUploadModal from "./components/Upload/Upload";
 import Emails from "./components/Emails/emails";
 import DisplayResume from "./components/Displayresume/DisplayResume";
-<<<<<<< HEAD
-import PageNotFound from "./components/PageNotFound/PageNotFound";
-import { useEffect } from "react";
-function App() {
-  //ABHI ISKI NEED NHI HAI
-
-  // const [jobList, setJobList] = useState([]);
-
-  // const handleAddJob = (jobData) => {
-  //   setJobList((prevJobs) => [...prevJobs, jobData]);
-  // };
-  // useEffect(() => {
-  //   localStorage.setItem("loggedIn", false);
-  // }, []);
-
-=======
 import NotFound from "./components/notfound/notfound";
 function App() {
->>>>>>> 287bae62916bc9612cce7c566b920685d89680b4
   return (
     <div className="App">
       <BrowserRouter>
@@ -44,13 +27,9 @@ function App() {
           <Route path="/FAQS" element={<FAQS />} />
           <Route path="/upload" element={<ResumeUploadModal />} />
           <Route path="/displayresume" element={<DisplayResume />} />
-<<<<<<< HEAD
-          <Route path="*" element={<PageNotFound />} />
-=======
-         
+
           {/* Catch-all route for handling 404 errors */}
           <Route path="*" element={<NotFound />} />
->>>>>>> 287bae62916bc9612cce7c566b920685d89680b4
         </Routes>
       </BrowserRouter>
     </div>
@@ -58,4 +37,3 @@ function App() {
 }
 
 export default App;
-

@@ -8,11 +8,7 @@ from dbModels import User, Job,ApplyJob
 from flask_mail import Message
 from mail import mail
 import base64
-<<<<<<< HEAD
 import jwt
-=======
-     
->>>>>>> 287bae62916bc9612cce7c566b920685d89680b4
 # from app import mail
 # this file was (UserRouter) is now AdminRouter and new UserRouter is used for applyingJobs api
 

@@ -3,7 +3,8 @@ from database import db
 from dbModels import User, Job ,ApplyJob
 from io import BytesIO
 import base64
-
+from resume_summarizer_using_bart_final import BertSummarize
+ 
 
 
 
@@ -21,6 +22,7 @@ def applyJob():
             JobId = body['jobId']    
             base64_resumeFile = body['resumeFile']
             resumeFile = base64.b64decode(base64_resumeFile)
+            print(BertSummarize(resumeFile))
 
         except Exception as error:
             return jsonify({"error": str(error)}), 400

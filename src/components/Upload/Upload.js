@@ -31,33 +31,35 @@ const ResumeUploadModal = ({ jobId }) => {
 
     if (name && email && file) {
       // file submission
-      // console.log("Name:", name);  
+      // console.log("Name:", name);
       // console.log("Email:", email);
       // console.log("jobId:", jobId);
       const reader = new FileReader();
       reader.readAsDataURL(file);
-      var base64File
+      var base64File;
       reader.onloadend = () => {
-        base64File = reader.result.split(',')[1];
+        base64File = reader.result.split(",")[1];
 
         const body = {
           name,
           email,
           jobId,
-          resumeFile: base64File
-
-        }
-        axios.post('http://localhost:5000/user/', body, {
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        }).then(res => {
-          console.log('done')
-        }).catch(err => {
-          console.log(err.response.data)
-        })
+          resumeFile: base64File,
+        };
+        axios
+          .post("http://localhost:5000/user/", body, {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          })
+          .then((res) => {
+            console.log("done");
+          })
+          .catch((err) => {
+            console.log(err.response.data);
+          });
         handleClose();
-      }
+      };
     } else {
       setError("Please fill in all fields and upload a PDF file");
     }
