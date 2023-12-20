@@ -1,16 +1,18 @@
 from flask import Blueprint, jsonify,request
 from database import db
-from dbModels import User, Job ,ApplyJob
-from io import BytesIO
+from dbModels import ApplyJob
 import base64
 from resume_summarizer_using_bart_final import BertSummarize
- 
+from resumerankingusingbertfinal import BertRanking
+from integrationdictformat import extract_information
 
 
 
 UserRouter = Blueprint('user', __name__)
 
 # Apply job Api
+
+
 @UserRouter.route('/', methods=['POST'])
 def applyJob():
     try:
@@ -22,7 +24,6 @@ def applyJob():
             JobId = body['jobId']    
             base64_resumeFile = body['resumeFile']
             resumeFile = base64.b64decode(base64_resumeFile)
-            print(BertSummarize(resumeFile))
 
         except Exception as error:
             return jsonify({"error": str(error)}), 400
@@ -46,7 +47,6 @@ def applyJob():
         
 
     except Exception as error:
-        print({'error':error})
-        return error
+        return ({'error':str(error)})
 
 

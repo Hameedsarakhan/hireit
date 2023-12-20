@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
+// import pdfjs from "pdfjs-dist";
 import "./Upload.css";
 import axios from "axios";
 
@@ -12,7 +13,6 @@ const ResumeUploadModal = ({ jobId }) => {
 
   const handleFileChange = async (e) => {
     let selectedFile = e.target.files[0];
-
     if (
       selectedFile &&
       selectedFile.type === "application/pdf" &&
@@ -35,16 +35,19 @@ const ResumeUploadModal = ({ jobId }) => {
       // console.log("Email:", email);
       // console.log("jobId:", jobId);
       const reader = new FileReader();
+      // reader.readAsText(file);
+      // console.log(check);
       reader.readAsDataURL(file);
       var base64File;
       reader.onloadend = () => {
         base64File = reader.result.split(",")[1];
-
+        // console.log(base64File);
         const body = {
           name,
           email,
           jobId,
           resumeFile: base64File,
+          file: file,
         };
         axios
           .post("http://localhost:5000/user/", body, {

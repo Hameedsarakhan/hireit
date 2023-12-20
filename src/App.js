@@ -16,7 +16,7 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<AddJob />} />
+          <Route path="/" element={<JobListings />} />
           <Route path="/Emails" element={<Emails />} />
           <Route path="/edit-job/:id" element={<EditJob />} />
           <Route path="/JobListings" element={<JobListings />} />

@@ -11,8 +11,8 @@ Original file is located at
 """**IMPORTING DEPENDENCIES**"""
 
 from tika import parser
-import warnings
-warnings.filterwarnings("ignore")
+from warnings import filterwarnings
+filterwarnings("ignore")
 from transformers import BartForConditionalGeneration, BartTokenizer
 
 """**INPUT RESUME**"""

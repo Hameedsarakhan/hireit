@@ -1,6 +1,7 @@
 .uploadbtn{
     background-color:#008CBA;
     margin-top: 20px;
+    /* z-index: 9999; */
 }
 .uploadbtn:hover{
     background-color:#4CAF50;
