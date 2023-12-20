@@ -42,6 +42,7 @@ function App() {
           <Route path="/upload" element={<ResumeUploadModal />} />
           <Route path="/displayresume" element={<DisplayResume />} />
           <Route path="*" element={<PageNotFound />} />
+
          
           {/* Catch-all route for handling 404 errors */}
           <Route path="*" element={<NotFound />} />
